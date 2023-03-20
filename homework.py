@@ -16,8 +16,6 @@ class InfoMessage:
 
 class Training:
     """Базовый класс тренировки."""
-    __dict__ = {'LEN_STEP': 0.65,
-                'M_IN_KM': 1000}
     LEN_STEP = 0.65
     M_IN_KM = 1000
 
@@ -55,11 +53,8 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-
-    def __init__(self, action: int, duration: float, weight: float):
-        super().__init__(action, duration, weight)
-        self.coeff_calorie1 = 18
-        self.coeff_calorie2 = 20
+    coeff_calorie2 = 20
+    coeff_calorie1 = 18
 
     def get_spent_calories(self) -> float:
         calories = (self.coeff_calorie1 * self.get_mean_speed() - self.coeff_calorie2) * self.weight / self.M_IN_KM * (
@@ -69,13 +64,13 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
+    coeff_calorie1 = 0.035
+    coeff_calorie2 = 2
+    coeff_calorie3 = 0.029
 
     def __init__(self, action: int, duration: float, weight: float, height: float):
         super().__init__(action, duration, weight)
         self.height = height
-        self.coeff_calorie1 = 0.035
-        self.coeff_calorie2 = 2
-        self.coeff_calorie3 = 0.029
 
     def get_spent_calories(self) -> float:
         calories = (self.coeff_calorie1 * self.weight + (
